@@ -47,7 +47,7 @@ object Configuration {
 
   val commonVersion = "0.2.8-SNAPSHOT"
 
-  val specs2Dependency = "org.specs2" %% "specs2" % "2.0" % "test"
+  val specs2Dependency = "org.specs2" %% "specs2" % "2.3.11" % "test"
   val logbackDependency = "ch.qos.logback" % "logback-classic" % "1.0.13" % "test"
 
   val commonDependencies = Seq(
@@ -55,7 +55,7 @@ object Configuration {
     "org.slf4j" % "slf4j-api" % "1.7.5",
     "joda-time" % "joda-time" % "2.2",
     "org.joda" % "joda-convert" % "1.3.1",
-    "org.scala-lang" % "scala-library" % "2.10.2",
+    "org.scala-lang" % "scala-library" % "2.11.1",
     "io.netty" % "netty-all" % "4.0.9.Final",
     specs2Dependency,
     logbackDependency
@@ -74,7 +74,7 @@ object Configuration {
         :+ "-feature"
     ,
     scalacOptions in doc := Seq("-doc-external-doc:scala=http://www.scala-lang.org/archives/downloads/distrib/files/nightly/docs/library/"),
-    scalaVersion := "2.10.2",
+    scalaVersion := "2.11.1",
     javacOptions := Seq("-source", "1.5", "-target", "1.5", "-encoding", "UTF8"),
     organization := "com.github.mauricio",
     version := commonVersion,
@@ -83,14 +83,16 @@ object Configuration {
     pomIncludeRepository := {
       _ => false
     },
-    publishTo <<= version {
+    /*publishTo <<= version {
       v: String =>
         val nexus = "https://oss.sonatype.org/"
         if (v.trim.endsWith("SNAPSHOT"))
           Some("snapshots" at nexus + "content/repositories/snapshots")
         else
           Some("releases" at nexus + "service/local/staging/deploy/maven2")
-    },
+    },*/
+    publishTo := Some("mm repo push" at "http://jenkins.imanadserver.com:8081/artifactory/libs-release-local"),
+    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
     pomExtra := (
       <url>https://github.com/mauricio/postgresql-async</url>
         <licenses>
