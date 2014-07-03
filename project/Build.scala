@@ -83,14 +83,16 @@ object Configuration {
     pomIncludeRepository := {
       _ => false
     },
-    publishTo <<= version {
+    /*publishTo <<= version {
       v: String =>
         val nexus = "https://oss.sonatype.org/"
         if (v.trim.endsWith("SNAPSHOT"))
           Some("snapshots" at nexus + "content/repositories/snapshots")
         else
           Some("releases" at nexus + "service/local/staging/deploy/maven2")
-    },
+    },*/
+    publishTo := Some("mm repo push" at "http://jenkins.imanadserver.com:8081/artifactory/libs-release-local"),
+    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
     pomExtra := (
       <url>https://github.com/mauricio/postgresql-async</url>
         <licenses>
